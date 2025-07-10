@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>100天纪念</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      font-family: 'Arial', sans-serif;
+      height: 100vh;
+      width: 100vw;
+      background: rgba(0,0,0,0.6);
+      color: white;
+    }
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url("微信图片_20250710234632.jpg");
+      background-size: cover;
+      background-position: center;
+      opacity: 0.3;
+      z-index: -2;
+    }
+    .content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      max-width: 90%;
+      font-size: 1.5em;
+      line-height: 2em;
+      background: rgba(0,0,0,0.3);
+      padding: 20px 30px;
+      border-radius: 20px;
+    }
+    .typewriter span {
+      display: inline-block;
+      white-space: pre-line;
+      overflow: hidden;
+      border-right: 3px solid white;
+      animation: typing 5s steps(40, end), blink 0.7s step-end infinite;
+    }
+    @keyframes typing {
+      from { width: 0 }
+      to { width: 100% }
+    }
+    @keyframes blink {
+      50% { border-color: transparent }
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+  <div class="content typewriter">
+    <span>
+亲爱的跃跃主人：
+
+今天是我们在一起的第100天。
+
+有太多的话想对你说，
+有太多的事想和你做。
+
+有你，是我此生最大的幸福。
+永远，永远爱你。❤️
+
+—— 你的笨蛋小狗（光光）
+    </span>
+  </div>
+
+  <canvas id="roseCanvas"></canvas>
+
+  <script>
+    const canvas = document.getElementById("roseCanvas");
+    const ctx = canvas.getContext("2d");
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    const petals = [];
+
+    for (let i = 0; i < 50; i++) {
+      petals.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: Math.random() * 4 + 2,
+        d: Math.random() * 1 + 0.5,
+        color: `rgba(255,0,127,${Math.random() * 0.6 + 0.4})`
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, width, height);
+      for (let i = 0; i < petals.length; i++) {
+        const p = petals[i];
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+        p.y += p.d;
+        p.x += Math.sin(p.y * 0.01) * 0.5;
+        if (p.y > height) {
+          p.y = -10;
+          p.x = Math.random() * width;
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+
+    draw();
+  </script>
+</body>
+</html>
